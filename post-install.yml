@@ -1,7 +1,8 @@
 - hosts: localhost
+  become: yes
+  become_user: root
   tasks:
     - name: Install Flatpak development tools
-      become: yes
       dnf:
         state: present
         name:
@@ -35,34 +36,40 @@
 
     # Enable several copr repositories.
     - name: Enable opentabletdriver from copr
-      become: yes
       community.general.copr:
         state: enabled
         name: cappyishihara/opentabletdriver
 
     - name: Enable lazygit from copr
-      become: yes
       community.general.copr:
         state: enabled
         name: atim/lazygit
 
     - name: Enable gopass from copr
-      become: yes
       community.general.copr:
         state: enabled
         name: fale/gopass
 
+    - name: Enable Iosevka from copr
+      community.general.copr:
+        state: enabled
+        name: peterwu/iosevka
+
+    # Package installations.
     - name: Install packages from enabled copr repositories
-      become: yes
       dnf:
         state: present
         name:
           - lazygit
           - opentabletdriver
           - golang-github-gopasspw-gopass
+          - iosevka-fonts
+          - iosevka-curly-fonts
+          - iosevka-curly-slab-fonts
+          - iosevka-slab-fonts
+          - iosevka-etoile-fonts
 
     - name: Set minimal development environment
-      become: yes
       dnf:
         state: present
         name:
@@ -76,7 +83,6 @@
           - man-pages
 
     - name: Install additional development tools
-      become: yes
       dnf:
         state: present
         name:
@@ -89,8 +95,14 @@
           - zoxide
           - direnv
 
+    - name: Install RPM development tools
+      dnf:
+        state: present
+        name:
+          - rpm-build
+          - go-rpm-macros
+
     - name: Setup container development tools
-      become: yes
       dnf:
         state: present
         name:
@@ -99,7 +111,6 @@
           - openssl
 
     - name: Install backup tools
-      become: yes
       dnf:
         state: present
         name:
@@ -107,7 +118,6 @@
           - borgmatic
 
     - name: Install (Doom) Emacs with its required dependencies
-      become: yes
       dnf:
         state: present
         name:
@@ -119,7 +129,6 @@
           - zstd
 
     - name: Install web-related tools
-      become: yes
       dnf:
         state: present
         name:
@@ -128,10 +137,10 @@
           - firefox
 
     - name: Install extra dependencies
-      become: yes
       dnf:
         state: present
         name:
+          - editorconfig
           - ImageMagick
           - ImageMagick-doc
           - ImageMagick-libs
@@ -143,15 +152,27 @@
           - starship
 
     - name: Install Fedora COPR dev't tools
-      become: yes
       dnf:
         state: present
         name:
           - copr-cli
           - dnf-plugins-core
 
+    - name: Install i18n tools
+      dnf:
+        state: present
+        name:
+          - fcitx5
+          - fcitx5-configtool
+          - fcitx5-gtk4
+          - fcitx5-lua
+          - fcitx5-mozc
+          - fcitx5-rime
+          - librime
+          - librime-tools
+          - mozc
+
     - name: Install Ansible
-      become: yes
       dnf:
         state: present
         name:
@@ -161,145 +182,128 @@
           - python3-psutil
 
     - name: Install fonts
-      become: yes
       dnf:
         state: present
         name:
-          - google-noto-serif-fonts
-          - google-noto-sans-fonts
+          - adobe-source-code-pro-fonts
+          - adobe-source-sans-pro-fonts
+          - adobe-source-serif-pro-fonts
           - google-noto-cjk-fonts
           - google-noto-cjk-fonts-common
           - google-noto-emoji-fonts
+          - google-noto-sans-fonts
+          - google-noto-serif-fonts
 
     # Install applications from Flatpak
     - name: Install Zrythm, a DAW
-      become: yes
       flatpak:
         state: present
         name: org.zrythm.Zrythm
         remote: flathub
 
     - name: Install Krita
-      become: yes
       flatpak:
         state: present
         name: org.kde.krita
         remote: flathub
 
     - name: Install Krita nightly
-      become: yes
       flatpak:
         state: present
         name: org.kde.krita-nightly
         remote: kdeapps
 
     - name: Install Junction, an application launcher
-      become: yes
       flatpak:
         state: present
         name: re.sonny.Junction
         remote: flathub
 
     - name: Install Tangram, a browser
-      become: yes
       flatpak:
         state: present
         name: re.sonny.Tangram
         remote: flathub
 
     - name: Install Blender, a 3D modelling software
-      become: yes
       flatpak:
         state: present
         name: org.blender.Blender
         remote: flathub
 
     - name: Install Lutris
-      become: yes
       flatpak:
         state: present
         name: net.lutris.Lutris
         remote: flathub-beta
 
     - name: Install Steam
-      become: yes
       flatpak:
         state: present
         name: com.valvesoftware.Steam
         remote: flathub
 
     - name: Install Emulsion, a color palette manager
-      become: yes
       flatpak:
         state: present
         name: io.github.lainsce.Emulsion
         remote: flathub
 
     - name: Install Inkscape, an alternative to Adobe Illustrator
-      become: yes
       flatpak:
         state: present
         name: org.inkscape.Inkscape
         remote: flathub
 
     - name: Install OBS Studio, the Swiss army knife for screencasts
-      become: yes
       flatpak:
         state: present
         name: com.obsproject.Studio
         remote: flathub
 
     - name: Install Flatseal, a Flatpak app permissions manager
-      become: yes
       flatpak:
         state: present
         name: com.github.tchx84.Flatseal
         remote: flathub
 
     - name: Install Helvum, a Patchbay-like app
-      become: yes
       flatpak:
         state: present
         name: org.pipewire.Helvum
         remote: flathub
 
     - name: Install EasyEffects, an audio effects app
-      become: yes
       flatpak:
         state: present
         name: com.github.wwmm.easyeffects
         remote: flathub
 
     - name: Install 0 A.D., a RTS game
-      become: yes
       flatpak:
         state: present
         name: com.play0ad.zeroad
         remote: flathub
 
     - name: Install Remnants of the Precursors, a 4X game
-      become: yes
       flatpak:
         state: present
         name: com.remnantsoftheprecursors.ROTP
         remote: flathub
 
     - name: Install Musescore, a music composition software
-      become: yes
       flatpak:
         state: present
         name: org.musescore.MuseScore
         remote: flathub
 
     - name: Install Bottles, a Windows app runner
-      become: yes
       flatpak:
         state: present
         name: com.usebottles.bottles
         remote: flathub
 
     - name: Install GIMP (nightly), a photo editor
-      become: yes
       flatpak:
         state: present
         name: org.gimp.GIMP
@@ -307,13 +311,11 @@
 
     # Configure desktop environment.
     - name: Install dconf keyfiles
-      become: yes
       copy:
-        src: ./files/dconf
+        src: ./files/dconf/
         dest: /etc/dconf/db/a-happy-gnome.d
 
     - name: Set 'user' dconf profile with the custom GNOME config
-      become: yes
       ansible.builtin.shell: echo "system-db:a-happy-gnome" >> /etc/dconf/profile/user
 
     - name: Enable night light in GNOME
