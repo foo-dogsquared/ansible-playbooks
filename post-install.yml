@@ -1,3 +1,4 @@
+---
 - hosts: localhost
   become: yes
   become_user: root
@@ -9,51 +10,30 @@
           - flatpak
           - flatpak-builder
 
-    # Add Flatpak remotes
-    - name: Add Flathub remote
+    - name: Add Flatpak remotes
       flatpak_remote:
         state: present
-        name: flathub
-        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+        name: "{{ item.name }}"
+        flatpakrepo_url: "{{ item.repo }}"
+      loop:
+        - name: flathub
+          repo: "https://flathub.org/repo/flathub.flatpakrepo"
+        - name: flathub-beta
+          repo: "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"
+        - name: gnome-nightly
+          repo: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+        - name: kdeapps
+          repo: "https://distribute.kde.org/kdeapps.flatpakrepo"
 
-    - name: Add Flathub beta remote
-      flatpak_remote:
-        state: present
-        name: flathub-beta
-        flatpakrepo_url: https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-
-    - name: Add GNOME Nightly remote
-      flatpak_remote:
-        state: present
-        name: gnome-nightly
-        flatpakrepo_url: https://nightly.gnome.org/gnome-nightly.flatpakrepo 
-
-    - name: Add KDE Flatpak remote
-      flatpak_remote:
-        state: present
-        name: kdeapps
-        flatpakrepo_url: https://distribute.kde.org/kdeapps.flatpakrepo
-
-    # Enable several copr repositories.
-    - name: Enable opentabletdriver from copr
+    - name: Enable copr repositories
       community.general.copr:
         state: enabled
-        name: cappyishihara/opentabletdriver
-
-    - name: Enable lazygit from copr
-      community.general.copr:
-        state: enabled
-        name: atim/lazygit
-
-    - name: Enable gopass from copr
-      community.general.copr:
-        state: enabled
-        name: fale/gopass
-
-    - name: Enable Iosevka from copr
-      community.general.copr:
-        state: enabled
-        name: peterwu/iosevka
+        name: "{{ item }}"
+      loop:
+        - cappyishihara/opentabletdriver
+        - atim/lazygit
+        - fale/gopass
+        - peterwu/iosevka
 
     # Package installations.
     - name: Install packages from enabled copr repositories
@@ -195,119 +175,52 @@
           - google-noto-serif-fonts
 
     # Install applications from Flatpak
-    - name: Install Zrythm, a DAW
+    - name: Install applications from 'flathub' Flatpak remote
       flatpak:
         state: present
-        name: org.zrythm.Zrythm
+        name: "{{ item }}"
         remote: flathub
+      loop:
+        - com.github.tchx84.Flatseal
+        - com.github.wwmm.easyeffects
+        - com.obsproject.Studio
+        - com.play0ad.zeroad
+        - com.remnantsoftheprecursors.ROTP
+        - com.usebottles.bottles
+        - com.valvesoftware.Steam
+        - io.github.lainsce.Emulsion
+        - org.blender.Blender
+        - org.inkscape.Inkscape
+        - org.kde.krita
+        - org.musescore.MuseScore
+        - org.pipewire.Helvum
+        - org.zrythm.Zrythm
+        - re.sonny.Junction
+        - re.sonny.Tangram
 
-    - name: Install Krita
+    - name: Install applications from 'kdeapps' Flatpak remote
       flatpak:
         state: present
-        name: org.kde.krita
-        remote: flathub
-
-    - name: Install Krita nightly
-      flatpak:
-        state: present
-        name: org.kde.krita-nightly
+        name: "{{ item }}"
         remote: kdeapps
+      loop:
+        - org.kde.krita-nightly
 
-    - name: Install Junction, an application launcher
+    - name: Install applications from 'flathub-beta' Flatpak remote
       flatpak:
         state: present
-        name: re.sonny.Junction
-        remote: flathub
-
-    - name: Install Tangram, a browser
-      flatpak:
-        state: present
-        name: re.sonny.Tangram
-        remote: flathub
-
-    - name: Install Blender, a 3D modelling software
-      flatpak:
-        state: present
-        name: org.blender.Blender
-        remote: flathub
-
-    - name: Install Lutris
-      flatpak:
-        state: present
-        name: net.lutris.Lutris
+        name: "{{ item }}"
         remote: flathub-beta
+      loop:
+        - net.lutris.Lutris
 
-    - name: Install Steam
+    - name: Install applications from 'gnome-nightly' Flatpak remote
       flatpak:
         state: present
-        name: com.valvesoftware.Steam
-        remote: flathub
-
-    - name: Install Emulsion, a color palette manager
-      flatpak:
-        state: present
-        name: io.github.lainsce.Emulsion
-        remote: flathub
-
-    - name: Install Inkscape, an alternative to Adobe Illustrator
-      flatpak:
-        state: present
-        name: org.inkscape.Inkscape
-        remote: flathub
-
-    - name: Install OBS Studio, the Swiss army knife for screencasts
-      flatpak:
-        state: present
-        name: com.obsproject.Studio
-        remote: flathub
-
-    - name: Install Flatseal, a Flatpak app permissions manager
-      flatpak:
-        state: present
-        name: com.github.tchx84.Flatseal
-        remote: flathub
-
-    - name: Install Helvum, a Patchbay-like app
-      flatpak:
-        state: present
-        name: org.pipewire.Helvum
-        remote: flathub
-
-    - name: Install EasyEffects, an audio effects app
-      flatpak:
-        state: present
-        name: com.github.wwmm.easyeffects
-        remote: flathub
-
-    - name: Install 0 A.D., a RTS game
-      flatpak:
-        state: present
-        name: com.play0ad.zeroad
-        remote: flathub
-
-    - name: Install Remnants of the Precursors, a 4X game
-      flatpak:
-        state: present
-        name: com.remnantsoftheprecursors.ROTP
-        remote: flathub
-
-    - name: Install Musescore, a music composition software
-      flatpak:
-        state: present
-        name: org.musescore.MuseScore
-        remote: flathub
-
-    - name: Install Bottles, a Windows app runner
-      flatpak:
-        state: present
-        name: com.usebottles.bottles
-        remote: flathub
-
-    - name: Install GIMP (nightly), a photo editor
-      flatpak:
-        state: present
-        name: org.gimp.GIMP
+        name: "{{ item }}"
         remote: gnome-nightly
+      loop:
+        - org.gimp.GIMP
 
     # Configure desktop environment.
     - name: Install dconf keyfiles
@@ -322,8 +235,7 @@
       dconf:
         state: present
         key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
-        value: true
+        value: "true"
 
     # TODO:
-    # * Configure GNOME with dconf module
     # * Configure GNOME extensions
