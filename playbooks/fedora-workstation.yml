@@ -1,0 +1,96 @@
+# TODO:
+# * Configure GNOME extensions
+# * Configure the Fedora host with custom systemd units
+# * Custom session variables
+---
+- name: foo-dogsquared's Fedora workstation
+  hosts: workstation
+  become: yes
+
+  roles:
+    - role: system/base
+      tags:
+        - dev_minimal
+        - dev_extra
+        - flatpak_desktop_apps
+        - i18n
+        - fonts
+    - apps/emacs
+
+  tasks:
+    - name: Install Flatpak development tools
+      dnf:
+        state: present
+        name:
+          - flatpak
+          - flatpak-builder
+
+    - name: Enable copr repositories
+      community.general.copr:
+        state: enabled
+        name: "{{ item }}"
+      loop:
+        - cappyishihara/opentabletdriver
+        - atim/lazygit
+        - fale/gopass
+        - peterwu/iosevka
+
+    # Package installations.
+    - name: Install packages from enabled copr repositories
+      dnf:
+        state: present
+        name:
+          - lazygit
+          - opentabletdriver
+          - golang-github-gopasspw-gopass
+          - iosevka-fonts
+          - iosevka-curly-fonts
+          - iosevka-curly-slab-fonts
+          - iosevka-slab-fonts
+          - iosevka-etoile-fonts
+
+    - name: Install RPM development tools
+      dnf:
+        state: present
+        name:
+          - rpm-build
+          - go-rpm-macros
+
+    - name: Install web-related tools
+      dnf:
+        state: present
+        name:
+          - thunderbird
+          - chromium
+          - firefox
+
+    - name: Install Fedora COPR dev't tools
+      dnf:
+        state: present
+        name:
+          - copr-cli
+          - dnf-plugins-core
+
+    - name: Install Ansible
+      dnf:
+        state: present
+        name:
+          - ansible
+          - ansible-doc
+          - ansible-collection-community-general
+          - python3-psutil
+
+    # Configure desktop environment.
+    - name: Install dconf keyfiles
+      copy:
+        src: ./files/dconf/
+        dest: /etc/dconf/db/a-happy-gnome.d
+
+    - name: Set 'user' dconf profile with the custom GNOME config
+      ansible.builtin.shell: echo "system-db:a-happy-gnome" >> /etc/dconf/profile/user
+
+    - name: Enable night light in GNOME
+      dconf:
+        state: present
+        key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+        value: "true"
