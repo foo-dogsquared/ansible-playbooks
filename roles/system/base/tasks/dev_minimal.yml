@@ -1,0 +1,38 @@
+---
+- name: Set minimal development environment
+  dnf:
+    state: present
+    name:
+      - neovim
+      - python-neovim
+      - git
+      - just
+      - kitty
+      - kitty-doc
+      - kitty-terminfo
+      - man-db
+      - man-pages
+
+- name: Setup container development tools
+  dnf:
+    state: present
+    name:
+      - podman
+      - toolbox
+      - openssl
+
+- name: Install backup tools
+  dnf:
+    state: present
+    name:
+      - borgbackup
+      - borgmatic
+
+- name: Install extra build systems
+  dnf:
+    state: present
+    name:
+      - cmake
+      - make
+      - meson
+      - ninja-build

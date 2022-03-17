@@ -1,0 +1,62 @@
+---
+- name: Add Flatpak remotes
+  flatpak_remote:
+    state: present
+    name: "{{ item.name }}"
+    flatpakrepo_url: "{{ item.repo }}"
+  loop:
+    - name: flathub
+      repo: "https://flathub.org/repo/flathub.flatpakrepo"
+    - name: flathub-beta
+      repo: "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"
+    - name: gnome-nightly
+      repo: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+    - name: kdeapps
+      repo: "https://distribute.kde.org/kdeapps.flatpakrepo"
+
+- name: Install applications from 'flathub' Flatpak remote
+  flatpak:
+    state: present
+    name: "{{ item }}"
+    remote: flathub
+  loop:
+    - com.github.tchx84.Flatseal
+    - com.github.wwmm.easyeffects
+    - com.obsproject.Studio
+    - com.play0ad.zeroad
+    - com.remnantsoftheprecursors.ROTP
+    - com.usebottles.bottles
+    - com.valvesoftware.Steam
+    - io.github.lainsce.Emulsion
+    - org.blender.Blender
+    - org.inkscape.Inkscape
+    - org.kde.krita
+    - org.musescore.MuseScore
+    - org.pipewire.Helvum
+    - org.zrythm.Zrythm
+    - re.sonny.Junction
+    - re.sonny.Tangram
+
+- name: Install applications from 'kdeapps' Flatpak remote
+  flatpak:
+    state: present
+    name: "{{ item }}"
+    remote: kdeapps
+  loop:
+    - org.kde.krita-nightly
+
+- name: Install applications from 'flathub-beta' Flatpak remote
+  flatpak:
+    state: present
+    name: "{{ item }}"
+    remote: flathub-beta
+  loop:
+    - net.lutris.Lutris
+
+- name: Install applications from 'gnome-nightly' Flatpak remote
+  flatpak:
+    state: present
+    name: "{{ item }}"
+    remote: gnome-nightly
+  loop:
+    - org.gimp.GIMP

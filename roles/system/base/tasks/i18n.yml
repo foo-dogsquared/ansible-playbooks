@@ -1,0 +1,22 @@
+---
+- name: Install i18n tools
+  dnf:
+    state: present
+    name:
+      - fcitx5
+      - fcitx5-configtool
+      - fcitx5-gtk4
+      - fcitx5-lua
+      - fcitx5-mozc
+      - fcitx5-rime
+      - librime
+      - librime-tools
+      - mozc
+
+- name: Install fonts for i18n
+  dnf:
+    state: present
+    name:
+      - google-noto-cjk-fonts
+      - google-noto-cjk-fonts-common
+

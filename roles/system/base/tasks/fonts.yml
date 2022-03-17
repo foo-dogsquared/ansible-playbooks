@@ -1,0 +1,11 @@
+---
+- name: Install fonts
+  dnf:
+    state: present
+    name:
+      - adobe-source-code-pro-fonts
+      - adobe-source-sans-pro-fonts
+      - adobe-source-serif-pro-fonts
+      - google-noto-emoji-fonts
+      - google-noto-sans-fonts
+      - google-noto-serif-fonts

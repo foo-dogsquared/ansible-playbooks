@@ -1,0 +1,28 @@
+---
+- name: Install additional development tools
+  dnf:
+    state: present
+    name:
+      - tealdeer
+      - bat
+      - fzf
+      - exa
+      - ripgrep
+      - sqlite
+      - zoxide
+      - direnv
+
+- name: Install extra dependencies
+  dnf:
+    state: present
+    name:
+      - editorconfig
+      - ImageMagick
+      - ImageMagick-doc
+      - ImageMagick-libs
+      - hyperfine
+      - libtree-sitter
+      - recoll
+      - recoll-gssp
+      - recoll-kio
+      - starship

@@ -1,0 +1,11 @@
+---
+- name: Install (Doom) Emacs with its required dependencies
+  package:
+    state: present
+    name:
+      - emacs
+      - libvterm
+      - aspell
+      - aspell-en
+      - wordnet
+      - zstd
