@@ -1,0 +1,24 @@
+= foo-dogsquared's Ansible playbooks
+:toc:
+
+This is my link:https://www.ansible.com/[Ansible] playbooks for various systems (only for Fedora for now).
+This is an attempt in making a reproducible and declarative desktop management ala\-link:https://nixos.org/[NixOS] (and  link:https://guix.gnu.org/[Guix]).
+
+
+
+
+== Resources
+
+This configuration may evolve into an abominable framework of configuration over time.
+At some point, it won't be the simple "Hello World"-esque reference for Ansible.
+If you're looking where to start learning about this, I've saved a list of them from the beginning:
+
+* link:https://fedoramagazine.org/using-ansible-setup-workstation/[Fedora Magazine's article with a very simple example.]
+This is where I first found about it and the very beginning of the Ansible usage journey.
+
+* The link:https://docs.ansible.com/ansible/latest/user_guide/index.html[user guide from the official documentation].
+
+* Some already existing configurations laying out and about on the internet...
+** link:https://gitlab.com/jwflory/swiss-army/[Justin W. Flory's Ansible playbooks] are a nice example on getting a complete configuration with Ansible.
+** link:https://github.com/fabaff/fedora-ansible/[fabaff's Ansible playbook for Fedora] is a perfect example for Fedora-specific configurations and it is simpler compared to the previously mentioned examples.
+** link:https://github.com/89luca89/ansible-fedora-minimal[89luca89's Ansible playbook for a minimal Fedora installation.] It's a simpler example than the previous making it easier to explore the features.
