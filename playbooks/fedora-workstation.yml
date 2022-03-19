@@ -2,6 +2,7 @@
 # * Configure GNOME extensions
 # * Configure the Fedora host with custom systemd units
 # * Custom session variables
+# This is the playbook for a Fedora Workstation post-installation.
 ---
 - name: foo-dogsquared's Fedora workstation
   hosts: workstation
@@ -10,12 +11,30 @@
   roles:
     - role: system/base
       tags:
-        - dev_minimal
-        - dev_extra
-        - flatpak_desktop_apps
-        - i18n
-        - fonts
-    - apps/emacs
+        - base
+        - dev
+        - system
+    - role: system/i18n
+      tags:
+        - base
+        - extra
+    - role: system/fonts
+      tags:
+        - base
+        - system
+    - role: system/flatpak
+      tags:
+        - desktop
+        - system
+        - flatpak
+    - role: system/external_backup
+      tags:
+        - system
+        - setup
+        - backup
+    - role: apps/emacs
+      tags:
+        - apps
 
   tasks:
     - name: Install Flatpak development tools
