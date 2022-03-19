@@ -1,0 +1,10 @@
+[Unit]
+Description=Run borgmatic backup
+Documentation=https://www.borgbackup.org/ https://torsion.org/borgmatic/ man:borg(1)
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target

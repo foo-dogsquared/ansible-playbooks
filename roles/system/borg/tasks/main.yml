@@ -1,0 +1,25 @@
+---
+- name: Install backup tools
+  dnf:
+    state: present
+    name:
+      - borgbackup
+      - borgmatic
+
+- name: Add the borgmatic service
+  copy:
+    src: "{{ role_path }}/files/borgmatic.service"
+    dest: /etc/systemd/system/borgmatic.service
+    setype: systemd_unit_file_t
+
+- name: Add the borgmatic timer
+  copy:
+    src: "{{ role_path }}/files/borgmatic.timer"
+    dest: /etc/systemd/system/borgmatic.timer
+    setype: systemd_unit_file_t
+
+- name: Enable the backup service schedule
+  service:
+    state: started
+    name: borgmatic.timer
+    enabled: yes
