@@ -1,8 +1,77 @@
 = foo-dogsquared's Ansible playbooks
 :toc:
 
-This is my link:https://www.ansible.com/[Ansible] playbooks for various systems (only for Fedora for now).
-This is an attempt in making a reproducible and declarative desktop management ala\-link:https://nixos.org/[NixOS] (and  link:https://guix.gnu.org/[Guix]).
+This is my link:https://www.ansible.com/[Ansible] playbooks for various systems (only for Fedora desktop for now).
+This is an attempt in making a reproducible and declarative desktop management ala\-link:https://nixos.org/[NixOS] (and link:https://guix.gnu.org/[Guix]).
+
+
+
+
+== A tour of the project
+
+Welcome to the project, wandering "declarative desktop management" dreamers!
+Here's one of the many ways to achieve what you've been looking for while the world is not enlightened yet.
+
+
+=== Prerequisites
+
+For this project to work, you need the following dependencies.
+
+* Ansible (of course)
+* `ansible-galaxy`
+
+The playbook collection also makes use of several collections from link:https://galaxy.ansible.com/[Ansible Galaxy].
+This mainly includes the following collections.
+
+* `ansible.posix`
+* `community.general`
+
+
+=== Core tasks
+
+The maintenance required for this project is not that big.
+It requires the same amount of attention as often as you install operating systems for the desktop (unless that's what you do professionally).
+
+This playbook collection is primarily intended for automating my personal desktop systems.
+It shouldn't require an Ansible server running but having one is immensely beneficial.
+All operations are assumed to be done at the project root.
+
+The main commands to interact with the playbooks can be summarized in this postcard-sized code block.
+
+[source, shell]
+----
+# To do the thing for one of your host.
+ansible-playbook --ask-become-pass $PLAYBOOK_FILE
+
+# Checking time!
+ansible-playbook --ask-become-pass --check $PLAYBOOK_FILE
+----
+
+
+=== Project structure
+
+This Ansible playbook collection takes a lot of cues from https://gitlab.com/jwflory/swiss-army/[Justin W. Flory's Ansible playbooks] down to the very folder structure.
+
+[source, tree]
+----
+ansible-playbooks
+├── inventory/  <1>
+├── playbooks/  <2>
+├── roles/      <3>
+├── ansible.cfg <4>
+└── README.adoc
+----
+
+<1> Contains the inventory for the Ansible server.
+footnote:[Though, this is mostly meant to be used locally.]
+
+<2> Various playbooks for various setups.
+Practically, this is similar to the `hosts` directory from my link:https://github.com/foo-dogsquared/nixos-config[NixOS configuration].
+
+<3> Contains the roles that mainly contain modularized tasks.
+This is similarly used to the `modules` directory from my link:https://github.com/foo-dogsquared/nixos-config[NixOS configuration].
+
+<4> The custom configuration for the Ansible server.
 
 
 
