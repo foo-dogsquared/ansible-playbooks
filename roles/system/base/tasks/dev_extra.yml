@@ -16,13 +16,21 @@
   dnf:
     state: present
     name:
-      - editorconfig
       - ImageMagick
       - ImageMagick-doc
       - ImageMagick-libs
       - hyperfine
       - libtree-sitter
+      - newsboat
       - recoll
       - recoll-gssp
       - recoll-kio
       - starship
+      - yt-dlp
+
+- name: Install documentation tools
+  package:
+    state: present
+    name:
+      - asciidoctor
+      - editorconfig

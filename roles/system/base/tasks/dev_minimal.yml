@@ -13,6 +13,17 @@
       - man-db
       - man-pages
 
+- name: Install GNU build system components
+  dnf:
+    state: present
+    name:
+      - autoconf
+      - autoconf-archive
+      - coreutils
+      - findutils
+      - libtool
+      - make
+
 - name: Setup container development tools
   dnf:
     state: present
@@ -33,6 +44,5 @@
     state: present
     name:
       - cmake
-      - make
       - meson
       - ninja-build
