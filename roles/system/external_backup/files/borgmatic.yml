@@ -1,0 +1,38 @@
+location:
+    source_directories:
+        - /home/*/library
+        - /home/*/Pictures
+        - /home/*/Music
+        - /home/*/Videos
+
+    repositories:
+        - /mnt/external-storage/backups
+
+    bsd_flags: true
+
+    exclude_patterns:
+        - '*.pyc'
+        - '*.tmp'
+        - '/home/*/library/projects/software/**/node_modules'
+        - '/home/*/library/projects/software/*/target'
+
+    exclude_if_present:
+        - .nobackup
+
+storage:
+    compression: zstd,9
+    archive_name_format: '{hostname}-{user}-{now:%F-%H-%M-%S-%z}'
+    relocated_repo_access_is_ok: true
+
+retention:
+    keep_within: 1d
+    keep_hourly: 8
+    keep_daily: 30
+    keep_weekly: 4
+    keep_monthly: 6
+    keep_yearly: 3
+    prefix: "{hostname}-{user}"
+
+hooks:
+  before_backup:
+    - findmnt /mnt/external-storage > /dev/null || exit 75

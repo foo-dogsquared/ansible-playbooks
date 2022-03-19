@@ -1,0 +1,14 @@
+---
+- name: Configure external storage device
+  ansible.posix.mount:
+    state: mounted
+    path: /mnt/external-storage
+    src: UUID=665A391C5A38EB07
+    fstype: ntfs
+    opts: nofail,noauto,user,x-systemd.automount,x-systemd.device-timeout=2,x-systemd.idle-timeout=2
+
+- name: Add the borgmatic configuration
+  copy:
+    src: "{{ role_path }}/files/borgmatic.yml"
+    dest: /etc/borgmatic.d/external-storage.yaml
+    setype: etc_t
