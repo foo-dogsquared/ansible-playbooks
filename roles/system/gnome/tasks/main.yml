@@ -1,0 +1,17 @@
+---
+- name: Install dconf keyfiles
+  copy:
+    src: "{{ role_path }}/files/dconf/"
+    dest: /etc/dconf/db/a-happy-gnome.d
+
+- name: Set 'user' dconf profile with the custom GNOME config
+  ansible.builtin.shell: grep "system-db:a-happy-gnome" && echo "system-db:a-happy-gnome" >> /etc/dconf/profile/user
+
+- name: Update dconf database
+  ansible.builtin.shell: dconf update
+
+- name: Enable night light in GNOME
+  dconf:
+    state: present
+    key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
