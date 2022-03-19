@@ -6,13 +6,15 @@
     flatpakrepo_url: "{{ item.repo }}"
   loop:
     - name: flathub
-      repo: "https://flathub.org/repo/flathub.flatpakrepo"
+      repo: https://flathub.org/repo/flathub.flatpakrepo
     - name: flathub-beta
-      repo: "https://flathub.org/beta-repo/flathub-beta.flatpakrepo"
+      repo: https://flathub.org/beta-repo/flathub-beta.flatpakrepo
     - name: gnome-nightly
-      repo: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+      repo: https://nightly.gnome.org/gnome-nightly.flatpakrepo
     - name: kdeapps
-      repo: "https://distribute.kde.org/kdeapps.flatpakrepo"
+      repo: https://distribute.kde.org/kdeapps.flatpakrepo
+    - name: appcenter
+      repo: https://flatpak.elementary.io/repo.flatpakrepo
 
 - name: Install applications from 'flathub' Flatpak remote
   flatpak:
@@ -20,6 +22,7 @@
     name: "{{ item }}"
     remote: flathub
   loop:
+    - com.github.gi_lom.dialect
     - com.github.tchx84.Flatseal
     - com.github.wwmm.easyeffects
     - com.obsproject.Studio

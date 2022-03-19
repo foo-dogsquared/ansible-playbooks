@@ -6,15 +6,3 @@
 - name: Install additional development tools
   include: dev_extra.yml
   tags: dev_extra
-
-- name: Install Flatpak remotes and desktop applications (requires `flatpak`)
-  include: flatpak_desktop_apps.yml
-  tags: flatpak_desktop_apps
-
-- name: Install i18n-related tools
-  include: i18n.yml
-  tags: i18n
-
-- name: Install fonts
-  include: fonts.yml
-  tags: fonts
