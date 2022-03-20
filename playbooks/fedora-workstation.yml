@@ -37,13 +37,6 @@
         - apps
 
   tasks:
-    - name: Install Flatpak development tools
-      dnf:
-        state: present
-        name:
-          - flatpak
-          - flatpak-builder
-
     - name: Enable copr repositories
       community.general.copr:
         state: enabled
