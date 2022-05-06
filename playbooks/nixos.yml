@@ -1,0 +1,13 @@
+# This is just a test playbook for combining NixOS with Ansible for doing tasks
+# that usually is not good with NixOS.
+---
+- name: foo-dogsquared's NixOS playbook for Flatpak-related tasks
+  hosts: workstation
+  become: yes
+
+  roles:
+    - role: system/flatpak
+      tags:
+        - desktop
+        - system
+        - flatpak
