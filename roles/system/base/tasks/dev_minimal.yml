@@ -32,13 +32,6 @@
       - toolbox
       - openssl
 
-- name: Install backup tools
-  dnf:
-    state: present
-    name:
-      - borgbackup
-      - borgmatic
-
 - name: Install extra build systems
   dnf:
     state: present

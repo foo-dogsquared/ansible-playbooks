@@ -1,6 +1,6 @@
 ---
 - name: Install minimal development environment tools
-  include: dev_minimal.yml
+  include_tasks: dev_minimal.yml
 
 - name: Install additional development tools
-  include: dev_extra.yml
+  include_tasks: dev_extra.yml
