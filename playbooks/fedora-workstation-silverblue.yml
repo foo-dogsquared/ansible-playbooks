@@ -1,0 +1,37 @@
+# TODO:
+# * Custom session variables
+---
+- name: foo-dogsquared's Fedora workstation
+  hosts: workstation
+  become: yes
+
+  roles:
+    - role: system/gnome
+      tags:
+        - base
+        - desktop
+        - system
+
+    - role: system/external_backup
+      tags:
+        - base
+        - desktop
+        - system
+
+    - role: system/flatpak
+      tags:
+        - desktop
+        - system
+        - flatpak
+
+  tasks:
+    - name: Install layered packages
+      community.general.rpm_ostree_pkg:
+        name:
+          - ansible
+          - distrobox
+          - borgmatic
+          - gnome-boxes
+          - kitty
+          - openssl
+        state: present
