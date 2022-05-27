@@ -12,19 +12,32 @@
         - desktop
         - system
 
+    - role: system/i18n
+      tags:
+        - desktop
+
     - role: system/external_backup
       tags:
-        - base
-        - desktop
         - system
 
     - role: system/flatpak
       tags:
-        - desktop
         - system
+        - desktop
         - flatpak
 
   tasks:
+    - name: Install various third-party repos
+      ansible.builtin.get_url:
+        url: "{{ item }}"
+        dest: /etc/yum.repos.d
+      loop:
+        - "https://copr.fedorainfracloud.org/coprs/cappyishihara/opentabletdriver/repo/fedora-36/cappyishihara-opentabletdriver-fedora-36.repo"
+        - "https://copr.fedorainfracloud.org/coprs/atim/lazygit/repo/fedora-36/atim-lazygit-fedora-36.repo"
+      tags:
+        - base
+        - system
+
     - name: Install layered packages
       community.general.rpm_ostree_pkg:
         name:
@@ -34,4 +47,11 @@
           - gnome-boxes
           - kitty
           - openssl
+
+          # This is not a part of the base repos.
+          - opentabletdriver
+          - lazygit
         state: present
+      tags:
+        - base
+        - system

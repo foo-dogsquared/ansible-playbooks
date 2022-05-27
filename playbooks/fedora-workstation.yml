@@ -14,27 +14,40 @@
         - base
         - dev
         - system
+
     - role: system/i18n
       tags:
-        - base
         - extra
+        - i18n
+
     - role: system/fonts
       tags:
         - base
         - system
+        - i18n
+
+    - role: system/gnome
+      tags:
+        - base
+        - system
+        - desktop
+
     - role: system/flatpak
       tags:
         - desktop
         - system
         - flatpak
+
     - role: system/external_backup
       tags:
         - system
         - setup
         - backup
+
     - role: apps/emacs
       tags:
         - apps
+        - emacs
 
   tasks:
     - name: Enable copr repositories
@@ -44,8 +57,10 @@
       loop:
         - cappyishihara/opentabletdriver
         - atim/lazygit
-        - fale/gopass
         - peterwu/iosevka
+      tags:
+        - base
+        - system
 
     # Package installations.
     - name: Install packages from enabled copr repositories
@@ -54,12 +69,14 @@
         name:
           - lazygit
           - opentabletdriver
-          - golang-github-gopasspw-gopass
           - iosevka-fonts
           - iosevka-curly-fonts
           - iosevka-curly-slab-fonts
           - iosevka-slab-fonts
           - iosevka-etoile-fonts
+      tags:
+        - base
+        - system
 
     - name: Install RPM development tools
       dnf:
@@ -75,6 +92,8 @@
           - thunderbird
           - chromium
           - firefox
+      tags:
+        - desktop
 
     - name: Install Fedora COPR dev't tools
       dnf:
@@ -83,11 +102,23 @@
           - copr-cli
           - dnf-plugins-core
 
+    - name: Install the extensions
+      dnf:
+        state: present
+        name:
+          - nautilus-gsconnect
+          - gnome-shell-extension-gsconnect
+          - gnome-shell-extension-appindicator
+          - gnome-shell-extension-caffeine
+          - gnome-shell-extension-just-perfection
+          - gnome-shell-extension-windowsNavigator
+      tags:
+        - desktop
+
     - name: Install Ansible
       dnf:
         state: present
         name:
           - ansible
-          - ansible-doc
           - ansible-collection-community-general
           - python3-psutil
