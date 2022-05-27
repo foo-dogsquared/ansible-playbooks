@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Enable i18n with fcitx5
+TryExec=flatpak
+Exec=flatpak run org.fcitx.Fcitx5
+StartupNotify=false
+
+X-GNOME-Autostart-Phase=Initialization
+X-KDE-autostart-phase=1
