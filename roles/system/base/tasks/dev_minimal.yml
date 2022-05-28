@@ -24,14 +24,6 @@
       - libtool
       - make
 
-- name: Setup container development tools
-  dnf:
-    state: present
-    name:
-      - podman
-      - toolbox
-      - openssl
-
 - name: Install extra build systems
   dnf:
     state: present

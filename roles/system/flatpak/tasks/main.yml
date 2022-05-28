@@ -1,13 +1,4 @@
 ---
-- name: Install Flatpak development tools
-  package:
-    state: present
-    name: "{{ item }}"
-  loop:
-    - flatpak
-    - flatpak-builder
-    - git
-
 - name: Add Flatpak remotes
   flatpak_remote:
     state: present
@@ -75,3 +66,5 @@
     remote: gnome-nightly
   loop:
     - org.gimp.GIMP
+    - org.gnome.NautilusDevel
+    - org.gnome.Builder
