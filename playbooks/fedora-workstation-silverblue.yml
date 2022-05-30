@@ -40,18 +40,22 @@
 
     - name: Install layered packages
       community.general.rpm_ostree_pkg:
+        state: present
         name:
           - ansible
           - distrobox
           - borgmatic
           - gnome-boxes
           - kitty
+          - neovim
           - openssl
+
+          # Making this usable for binging movies.
+          - gstreamer1-plugin-openh264
 
           # This is not a part of the base repos.
           - opentabletdriver
           - lazygit
-        state: present
       tags:
         - base
         - system

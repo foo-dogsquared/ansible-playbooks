@@ -22,14 +22,11 @@
 
     - role: system/fonts
       tags:
-        - base
-        - system
+        - desktop
         - i18n
 
     - role: system/gnome
       tags:
-        - base
-        - system
         - desktop
 
     - role: system/flatpak
@@ -59,8 +56,8 @@
         - atim/lazygit
         - peterwu/iosevka
       tags:
-        - base
         - system
+        - copr
 
     # Package installations.
     - name: Install packages from enabled copr repositories
@@ -75,8 +72,8 @@
           - iosevka-slab-fonts
           - iosevka-etoile-fonts
       tags:
-        - base
         - system
+        - copr
 
     - name: Install RPM development tools
       dnf:
@@ -84,6 +81,8 @@
         name:
           - rpm-build
           - go-rpm-macros
+      tags:
+        - dev
 
     - name: Install web-related tools
       dnf:
@@ -101,6 +100,8 @@
         name:
           - copr-cli
           - dnf-plugins-core
+      tags:
+        - dev
 
     - name: Install the extensions
       dnf:
@@ -122,3 +123,5 @@
           - ansible
           - ansible-collection-community-general
           - python3-psutil
+      tags:
+        - dev
